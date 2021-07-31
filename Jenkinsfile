@@ -1,5 +1,10 @@
 pipeline {
   stages {
+    stage('Pull changes') {
+      steps {
+        sh "cd /home/ubuntu/terraform && git pull origin main"
+      }
+    }
     stage('Terraform Init') {
       steps {
         sh "cd /home/ubuntu/terraform && terraform init -input=false"
