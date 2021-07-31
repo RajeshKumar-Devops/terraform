@@ -87,7 +87,7 @@ data "aws_subnet_ids" "public" {
 
 
 data "aws_subnet_ids" "application" {
-  vpc_id = = data.aws_vpc.production.id
+  vpc_id = data.aws_vpc.production.id
   filter {
     name   = "tag:purpose"
     values = ["application"]
