@@ -60,11 +60,8 @@ resource "aws_launch_configuration" "ec2_template" {
   instance_type = var.flavor
   user_data = <<-EOF
             #!/bin/bash
-            yum -y update
-            yum -y install httpd
-            echo "Website is Working !" > /var/www/html/index.html
-            systemctl start httpd
-            systemctl enable httpd
+            apt update
+            apt install nginx -y
             EOF
   security_groups = [aws_security_group.asg_sec_group.id]
   // If the launch_configuration is modified:
