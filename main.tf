@@ -72,13 +72,28 @@ resource "aws_launch_configuration" "ec2_template" {
   }
 }
 
-data "aws_vpc" "default" {
-  default = true
+data "aws_vpc" "production" {
+  id = var.vpc_id
 }
 
-data "aws_subnet_ids" "default" {
-  vpc_id = data.aws_vpc.default.id
+data "aws_subnet_ids" "public" {
+  vpc_id = data.aws_vpc.production.id
+  filter {
+    name   = "tag:purpose"
+    values = ["public"]
+  }
 }
+
+
+
+data "aws_subnet_ids" "application" {
+  vpc_id = = data.aws_vpc.production.id
+  filter {
+    name   = "tag:purpose"
+    values = ["application"]
+  }
+}
+
 
 
 
@@ -95,7 +110,7 @@ resource "aws_autoscaling_group" "Practice_ASG" {
   // EC2 --> Minimal health check - consider the vm unhealthy if the Hypervisor says the vm is completely down
   // ELB --> Instructs the ASG to use the "target's group" health check
 
-  vpc_zone_identifier = data.aws_subnet_ids.default.ids // A list of subnet IDs to launch resources in.
+  vpc_zone_identifier = data.aws_subnet_ids.application.ids // A list of subnet IDs to launch resources in.
   // We specified all the subnets in the default vpc
 
   target_group_arns = [aws_lb_target_group.asg.arn]
@@ -116,7 +131,7 @@ resource "aws_lb" "ELB" {
   load_balancer_type = "application"
 
   // Use all the subnets in your default VPC (Each subnet == different AZ)
-  subnets  = data.aws_subnet_ids.default.ids
+  subnets  = data.aws_subnet_ids.public.ids
   security_groups = [aws_security_group.alb-sec-group.id]
 }
 
