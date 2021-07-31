@@ -19,3 +19,8 @@ variable "ec2_instance_port" {
   default = 80
 }
 
+variable "vpc_id" {
+  type = string
+  default = "vpc-0d3aa964b5291fe45"
+}
+
