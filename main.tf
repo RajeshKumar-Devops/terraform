@@ -9,6 +9,7 @@ provider "aws" {
 resource "aws_security_group" "alb-sec-group" {
   name = "alb-sec-group"
   description = "Security Group for the ELB (ALB)"
+  vpc_id = var.vpc_id
   egress {
     from_port = 0
     protocol = "-1"
@@ -32,6 +33,7 @@ resource "aws_security_group" "alb-sec-group" {
 resource "aws_security_group" "asg_sec_group" {
   name = "asg_sec_group"
   description = "Security Group for the ASG"
+  vpc_id = var.vpc_id
   tags = {
     name = "name"
   }
