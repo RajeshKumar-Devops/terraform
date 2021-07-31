@@ -158,7 +158,7 @@ resource "aws_lb_target_group" "asg" {
   name = "asg-example"
   port = var.ec2_instance_port
   protocol = "HTTP"
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = data.aws_vpc.production.id
 
   health_check {
     path = "/"
