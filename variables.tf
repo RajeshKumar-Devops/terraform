@@ -1,12 +1,12 @@
 
 variable "region" {
   type = string
-  default = "us-west-1"
+  default = "eu-west-3"
 }
 
 variable "image_id" {
   type = string
-  default = "ami-04e59c05167ea7bd5"
+  default = "ami-0f7cd40eac2214b37"
 }
 
 variable "flavor" {
