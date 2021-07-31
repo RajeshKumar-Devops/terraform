@@ -23,7 +23,6 @@ pipeline {
     }
     stage('Terraform Apply') {
       steps {
-        input 'Apply Plan'
         sh "cd /home/ubuntu/terraform && terraform apply -input=false tfplan && sudo rm -rf tfplan"
       }
     }
